@@ -87,31 +87,36 @@
         </div>
         <span class="cart-badge" id="cartBadge">0 seleccionados</span>
       </div>
+
       <div class="cart-body">
         <div class="cart-empty" id="cartEmpty">No has agregado Deviants aún.</div>
         <div class="cart-items" id="cartItems"></div>
       </div>
+
       <div class="cart-footer">
         <div class="cart-total">
           <span>Total</span>
           <strong id="cartTotal">$0.00 USD</strong>
         </div>
+
         <button id="btnSendCart" class="btn-send-cart" disabled>
           <i class="fa-brands fa-whatsapp"></i> Enviar pedido por WhatsApp
         </button>
+
         <div class="cart-contact">
           <i class="fa-brands fa-whatsapp"></i> Contáctame por WhatsApp para coordinar tu pedido
         </div>
       </div>
+
       <div id="cartToast" class="cart-toast" aria-live="polite"></div>
     </div>
 
     <div class="cards-grid">
-      
 
-      
+      <!-- =====================================================
+           STARFALL
+           ===================================================== -->
 
-      <!-- New Cards: Starfall -->
       <div class="card">
         <div class="card-tag">Starfall</div>
         <div class="card-img-wrapper">
@@ -154,12 +159,46 @@
         </div>
       </div>
 
-      <!-- New Cards: Lunar -->
+      <!-- NUEVO: ZAPAMANDRA -->
+      <div class="card">
+        <div class="card-tag">Starfall</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Zapamandra.jpeg" alt="Zapamandra">
+        </div>
+        <h3>Zapamandra</h3>
+        <p class="stats">Starfall • Disponible</p>
+        <p class="desc">Deviant Starfall.</p>
+        <div class="card-footer">
+          <span class="price">$25 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Zapamandra`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <!-- NUEVO: MINICOMILÓN -->
+      <div class="card">
+        <div class="card-tag">Starfall</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Minicomilón.jpeg" alt="Minicomilón">
+        </div>
+        <h3>Minicomilón</h3>
+        <p class="stats">Starfall • Disponible</p>
+        <p class="desc">Deviant Starfall.</p>
+        <div class="card-footer">
+          <span class="price">$25 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Minicomilón`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+
+      <!-- =====================================================
+           LUNAR
+           ===================================================== -->
+
       <div class="card">
         <div class="card-tag">Lunar</div>
         <div class="card-img-wrapper">
           <img loading="lazy" class="deviant-img" src="Lobo.jpeg" alt="Lobo">
-          </div>   
+        </div>
         <h3>Lobo</h3>
         <p class="stats">Lunar • Disponible</p>
         <p class="desc">Deviant Lunar.</p>
@@ -211,12 +250,45 @@
         </div>
       </div>
 
-      <!-- New Cards: Caos -->
+      <!-- NUEVO: ZENOPURIFICADOR -->
+      <div class="card">
+        <div class="card-tag">Lunar</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Zenopurificador.jpeg" alt="Zenopurificador">
+        </div>
+        <h3>Zenopurificador</h3>
+        <p class="stats">Lunar • Disponible</p>
+        <p class="desc">Deviant Lunar.</p>
+        <div class="card-footer">
+          <span class="price">$20 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Zenopurificador`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <!-- NUEVO: MARIPOSA LUNAR -->
+      <div class="card">
+        <div class="card-tag">Lunar</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Mariposa Lunar.jpeg" alt="Mariposa Lunar">
+        </div>
+        <h3>Mariposa Lunar</h3>
+        <p class="stats">Lunar • Disponible</p>
+        <p class="desc">Deviant Lunar.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Mariposa Lunar`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+
+      <!-- =====================================================
+           CAOS
+           ===================================================== -->
 
       <div class="card">
         <div class="card-tag">Caos</div>
         <div class="card-img-wrapper">
-          <img loading="lazy" class="deviant-img" src="hada del caos.jpg" alt="hada del caos">
+          <img loading="lazy" class="deviant-img" src="hada del caos.jpg" alt="Hada del Caos">
         </div>
         <h3>Hada del Caos</h3>
         <p class="stats">Caos • Disponible</p>
@@ -244,7 +316,7 @@
       <div class="card">
         <div class="card-tag">Caos</div>
         <div class="card-img-wrapper">
-          <img loading="lazy" class="deviant-img" src="mr_wish.jpg" alt="mr wish del caos">
+          <img loading="lazy" class="deviant-img" src="mr_wish.jpg" alt="Mr. Wish del Caos">
         </div>
         <h3>Mr. Wish del Caos</h3>
         <p class="stats">Caos • Disponible</p>
@@ -255,7 +327,26 @@
         </div>
       </div>
 
-      <!-- New Card: Aberrante -->
+      <!-- NUEVO: CHAOSAURUS -->
+      <div class="card">
+        <div class="card-tag">Caos</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Chaosaurus.jpeg" alt="Chaosaurus">
+        </div>
+        <h3>Chaosaurus</h3>
+        <p class="stats">Caos • Disponible</p>
+        <p class="desc">Deviant Caos.</p>
+        <div class="card-footer">
+          <span class="price">$15 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Chaosaurus`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+
+      <!-- =====================================================
+           ABERRANTES
+           ===================================================== -->
+
       <div class="card">
         <div class="card-tag">Aberrante</div>
         <div class="card-img-wrapper">
@@ -269,6 +360,223 @@
           <button class="btn-card-add" onclick="addToCart(this, `Rebecca Aberrante`)">Agregar al pedido</button>
         </div>
       </div>
+
+      <!-- NUEVO: DR: OSITO ABERRANTE -->
+      <div class="card">
+        <div class="card-tag">Aberrante</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Dr Osito Aberrante.jpeg" alt="Dr: Osito Aberrante">
+        </div>
+        <h3>Dr: Osito Aberrante</h3>
+        <p class="stats">Aberrante • Disponible</p>
+        <p class="desc">Deviant aberrante.</p>
+        <div class="card-footer">
+          <span class="price">$20 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Dr: Osito Aberrante`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+
+      <!-- =====================================================
+           OTROS DEVIANTS — SIN ÁREA
+           ===================================================== -->
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Invocador de almas.jpeg" alt="Invocador de almas">
+        </div>
+        <h3>Invocador de almas</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Invocador de almas`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Bégimo.jpeg" alt="Bégimo">
+        </div>
+        <h3>Bégimo</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Bégimo`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Caballero Plateado.jpeg" alt="Caballero Plateado">
+        </div>
+        <h3>Caballero Plateado</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Caballero Plateado`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Mr Wish Rex.jpeg" alt="Mr: Wish Rex">
+        </div>
+        <h3>Mr: Wish Rex</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Mr: Wish Rex`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="George el Valiente.jpeg" alt="George el Valiente">
+        </div>
+        <h3>George el Valiente</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `George el Valiente`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Ballenato.jpeg" alt="Ballenato">
+        </div>
+        <h3>Ballenato</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Ballenato`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Lobo Radiante.jpeg" alt="Lobo Radiante">
+        </div>
+        <h3>Lobo Radiante</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Lobo Radiante`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Vudú Esponjoso.jpeg" alt="Vudú Esponjoso">
+        </div>
+        <h3>Vudú Esponjoso</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$15 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Vudú Esponjoso`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Sol Infrasonico.jpeg" alt="Sol Infrasónico">
+        </div>
+        <h3>Sol Infrasónico</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$15 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Sol Infrasónico`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Mariposa Azul.jpeg" alt="Mariposa Azúl">
+        </div>
+        <h3>Mariposa Azúl</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Mariposa Azúl`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Minicomilon-Devorador de Estrellas.jpeg" alt="Minicomilón - Devorador de Estrellas">
+        </div>
+        <h3>Minicomilón - Devorador de Estrellas</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Minicomilón - Devorador de Estrellas`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Gel sulpurante estrella marina.jpeg" alt="Gel sulpurante: estrella marina">
+        </div>
+        <h3>Gel sulpurante: estrella marina</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Gel sulpurante: estrella marina`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Cuenco reconfortante.jpeg" alt="Cuenco reconfortante">
+        </div>
+        <h3>Cuenco reconfortante</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Cuenco reconfortante`)">Agregar al pedido</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-tag">Otros</div>
+        <div class="card-img-wrapper">
+          <img loading="lazy" class="deviant-img" src="Cocinosaurio Rex.jpeg" alt="Cocinosaurio Rex">
+        </div>
+        <h3>Cocinosaurio Rex</h3>
+        <p class="stats">Otros • Disponible</p>
+        <p class="desc">Deviant.</p>
+        <div class="card-footer">
+          <span class="price">$10 USD</span>
+          <button class="btn-card-add" onclick="addToCart(this, `Cocinosaurio Rex`)">Agregar al pedido</button>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -289,11 +597,13 @@
       <h3>Seguridad 100%</h3>
       <p>Transacciones directas dentro del juego en el servidor Dream Y0002 NA.</p>
     </div>
+
     <div class="feature-card">
       <i class="fa-solid fa-bolt"></i>
       <h3>Entrega Rápida</h3>
       <p>Coordinación inmediata por WhatsApp una vez verificado el pedido.</p>
     </div>
+
     <div class="feature-card">
       <i class="fa-solid fa-crown"></i>
       <h3>Atención por Once Human Market</h3>
@@ -306,10 +616,14 @@
     <div class="footer-content">
       <h2>¿Listo para tener los mejores Deviants del juego?</h2>
       <p>Escríbeme por WhatsApp y coordinamos tu entrega en <strong>Dream Y0002 NA</strong>.</p>
-      <a href="https://wa.me/18494268576?text=Hola,%20quiero%20informacion%20sobre%20sus%20servicios" target="_blank" class="btn-whatsapp-footer">
+
+      <a href="https://wa.me/18494268576?text=Hola,%20quiero%20informacion%20sobre%20sus%20servicios"
+         target="_blank"
+         class="btn-whatsapp-footer">
         <i class="fa-brands fa-whatsapp"></i> Contactar al soporte
       </a>
     </div>
+
     <div class="footer-bottom">
       <p>&copy; 2026 Once Human Market - Once Human Trading.</p>
     </div>
@@ -318,13 +632,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

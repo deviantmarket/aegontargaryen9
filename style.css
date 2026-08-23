@@ -955,10 +955,15 @@ body, input, button, a {
 }
 
 /* Pequeña mejora visual para el header */
-.navbar { background: linear-gradient(90deg, rgba(1,6,12,0.9), rgba(6,10,18,0.85)); }
+.navbar {
+  background: linear-gradient(90deg, rgba(1,6,12,0.9), rgba(6,10,18,0.85));
+}
 
 /* Accesibilidad: foco claro */
-a:focus, button:focus, input:focus { outline: 2px solid rgba(0,240,255,0.18); outline-offset: 2px; }
+a:focus, button:focus, input:focus {
+  outline: 2px solid rgba(0,240,255,0.18);
+  outline-offset: 2px;
+}
 
 /* Modal de imagen ligera */
 .image-modal { 
@@ -969,13 +974,18 @@ a:focus, button:focus, input:focus { outline: 2px solid rgba(0,240,255,0.18); ou
   align-items: center;
   justify-content: center;
 }
-.image-modal[aria-hidden="false"] { display: flex; }
+
+.image-modal[aria-hidden="false"] {
+  display: flex;
+}
+
 .image-modal-backdrop {
   position: absolute;
   inset: 0;
   background: rgba(2,6,23,0.8);
   backdrop-filter: blur(4px) saturate(0.9);
 }
+
 .image-modal-content {
   position: relative;
   max-width: 92vw;
@@ -987,24 +997,22 @@ a:focus, button:focus, input:focus { outline: 2px solid rgba(0,240,255,0.18); ou
   align-items: center;
   z-index: 2001;
 }
+
 .image-modal-content img {
   max-width: 100%;
   max-height: 72vh;
   border-radius: 6px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
+
 .close-btn {
   position: absolute;
   right: 8px;
   top: 8px;
   background: transparent;
+  color: #ffffff;
   border: none;
-  color: #fff;
   font-size: 2rem;
   cursor: pointer;
-}
-.image-caption {
-  margin-top: 0.6rem;
-  color: var(--text-muted);
-  font-weight: 600;
+  z-index: 2002;
 }
