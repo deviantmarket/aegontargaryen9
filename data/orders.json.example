@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ORDER-1725360000000",
+    "items": [
+      {
+        "type": "deviant",
+        "id": "medusa-polar",
+        "name": "Medusa Polar",
+        "category": "Starfall",
+        "quantity": 1,
+        "price": 20
+      },
+      {
+        "type": "links",
+        "id": "energy-links",
+        "name": "Energy Links",
+        "category": "Divisa",
+        "amountLinks": 5000000,
+        "price": 5
+      }
+    ],
+    "serverName": "Dream Y0002 NA",
+    "timestamp": "2026-09-01T14:30:45.123Z",
+    "createdAt": "2026-09-01T14:30:45.123Z"
+  }
+]

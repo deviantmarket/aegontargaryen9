@@ -781,47 +781,42 @@ async function copyToClipboard(text) {
   }
 }
 
-// Envío opcional a Discord Webhook
-async function sendToDiscordWebhook() {
-  if (!DISCORD_WEBHOOK_URL) return;
+// Envío al servidor backend (que a su vez envía a Discord)
+async function sendOrderToServer() {
+  if (unifiedCart.length === 0) return false;
 
   try {
-    let grandTotal = 0;
-    const itemsDescription = unifiedCart.map(item => {
-      if (item.type === 'links') {
-        grandTotal += item.price;
-        return `⚡ **${formatNumber(item.amountLinks)} Energy Links** — ${formatUSD(item.price)}`;
-      } else {
-        const sub = item.price * item.quantity;
-        grandTotal += sub;
-        return `🐾 **${item.quantity}x ${item.name}** (${item.category}) — ${formatUSD(sub)}`;
-      }
-    }).join('\n');
-
-    const payload = {
-      username: "Once Human Market Bot",
-      avatar_url: "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/shield-halved.svg",
-      embeds: [
-        {
-          title: "🛒 ¡Nuevo Pedido Recibido!",
-          color: 0x00f0ff,
-          fields: [
-            { name: "📍 Servidor", value: SERVER_NAME, inline: true },
-            { name: "📦 Productos", value: itemsDescription || "Sin items", inline: false },
-            { name: "💰 Total", value: `**${formatUSD(grandTotal)}**`, inline: true }
-          ],
-          timestamp: new Date().toISOString()
-        }
-      ]
+    // Preparar datos del pedido
+    const orderData = {
+      items: unifiedCart.map(item => ({
+        type: item.type,
+        id: item.id,
+        name: item.name,
+        category: item.category,
+        quantity: item.quantity,
+        amountLinks: item.amountLinks,
+        price: item.price
+      })),
+      serverName: SERVER_NAME,
+      timestamp: new Date().toISOString()
     };
 
-    await fetch(DISCORD_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+    // Intentar enviar al servidor local primero
+    const response = await fetch('http://localhost:3000/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData)
     });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log('✅ Pedido enviado al servidor:', result);
+      return true;
+    }
   } catch (err) {
-    console.warn("No se pudo enviar al Webhook:", err);
+    console.warn('⚠️ No se pudo conectar al servidor backend:', err.message);
+    // El pedido se puede seguir procesando incluso sin conexión al servidor
+    return false;
   }
 }
 
@@ -832,26 +827,37 @@ async function checkoutDirectToDiscord() {
     return;
   }
 
-  const messageText = buildDiscordOrderMessage();
+  // 1. Mostrar feedback inicial
+  showCartToast("📤 Enviando pedido a Discord...");
 
-  // 1. Copiar automáticamente al portapapeles
+  // 2. Enviar al servidor backend
+  const serverResponse = await sendOrderToServer();
+
+  // 3. Generar mensaje para portapapeles (como backup)
+  const messageText = buildDiscordOrderMessage();
   const copied = await copyToClipboard(messageText);
 
-  // 2. Enviar a Webhook si está configurado
-  sendToDiscordWebhook();
-
-  // 3. Feedback visual
-  if (copied) {
+  // 4. Feedback visual
+  if (serverResponse) {
+    showCartToast("✅ ¡Pedido enviado a Discord exitosamente!");
+  } else if (copied) {
     showCartToast("✅ ¡Pedido copiado al portapapeles! Abriendo Discord...");
   } else {
-    showCartToast("Abriendo Discord...");
+    showCartToast("⚠️ Abriendo Discord para completar el pedido...");
   }
 
-  // 4. Cerrar drawer y abrir Discord de AegonTargaryen9
+  // 5. Cerrar drawer y abrir Discord de AegonTargaryen9
   closeCartDrawer();
   setTimeout(() => {
     window.open(DISCORD_PROFILE_URL, '_blank');
-  }, 350);
+  }, 500);
+
+  // 6. Limpiar el carrito después de 2 segundos
+  setTimeout(() => {
+    unifiedCart = [];
+    saveCartToStorage();
+    renderCart();
+  }, 2000);
 }
 
 // =====================================================

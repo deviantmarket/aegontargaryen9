@@ -1,0 +1,93 @@
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║         🛍️  ONCE HUMAN MARKET - DISCORD INTEGRATION 🛍️        ║
+║                                                               ║
+║                      ✅ INSTALACIÓN COMPLETA                  ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+¡HOLA! Tu tienda está lista para recibir pedidos automáticamente en Discord.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚡ 3 PASOS PARA EMPEZAR:
+
+  1️⃣  npm run setup
+      └─ Configurar tu Webhook de Discord
+
+  2️⃣  npm start
+      └─ Inicia el servidor
+
+  3️⃣  http://localhost:3000
+      └─ Abre tu tienda en el navegador
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 DOCUMENTACIÓN (LÉELO PRIMERO):
+
+  ├─ QUICK_START.md          👈 Empieza aquí (3 min)
+  ├─ README.md               📖 Guía completa (15 min)
+  ├─ INSTALLATION_SUMMARY.md 📋 Resumen de qué se hizo
+  ├─ TROUBLESHOOTING.md      🔧 Si algo no funciona
+  └─ INDEX.md                📚 Índice de todo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔐 IMPORTANTE:
+
+  ⚠️  El archivo .env contiene tu Webhook URL de Discord
+  🚫  NUNCA lo hagas público ni lo subas a GitHub
+  ✅  Ya está protegido en .gitignore
+  📝  Si lo pierdes, vuelve a ejecutar: npm run setup
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 COMANDOS ÚTILES:
+
+  npm install          Instala dependencias (si falta)
+  npm run setup        Configurar Discord Webhook
+  npm start            Inicia el servidor
+  npm run dev          Inicia con auto-reinicio
+  npm run orders       Ver historial de pedidos
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ LO QUE SE HA HECHO:
+
+  ✅ Backend Node.js con Express
+  ✅ Integración con Discord Webhooks
+  ✅ Base de datos local de pedidos
+  ✅ Script de configuración interactivo
+  ✅ Documentación completa
+  ✅ Manejo de errores robusto
+  ✅ Seguridad (variables de entorno)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 ¿LISTO? COMIENZA AQUÍ:
+
+  1. Abre la terminal en esta carpeta
+  2. Escribe: npm run setup
+  3. Sigue las instrucciones
+  4. Escribe: npm start
+  5. Abre: http://localhost:3000
+  6. ¡Prueba haciendo un pedido!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ ¿NECESITAS AYUDA?
+
+  → Lee QUICK_START.md (rápido)
+  → Consulta TROUBLESHOOTING.md (si hay errores)
+  → Ejecuta npm run setup (si hay dudas)
+  → Revisa los logs en la terminal
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+¡Bienvenido a Once Human Market! 🎉
+
+Tu tienda está lista para recibir pedidos automáticamente en Discord.
+
+Versión: 1.0.0 | Estado: ✅ Listo | Fecha: 01/09/2026
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

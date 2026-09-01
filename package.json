@@ -1,0 +1,24 @@
+{
+  "name": "once-human-market",
+  "version": "1.0.0",
+  "description": "Tienda oficial de Deviants y Energy Links para Once Human",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "setup": "node setup.js",
+    "orders": "node orders.js"
+  },
+  "keywords": ["once-human", "market", "deviants", "discord"],
+  "author": "AegonTargaryen9",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
