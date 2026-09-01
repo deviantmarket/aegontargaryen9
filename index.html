@@ -6,7 +6,7 @@
   <title>Once Human Market | Deviants & Energy Links Store</title>
   
   <!-- SEO & Open Graph Meta Tags -->
-  <meta name="description" content="Tienda oficial de Deviants y Energy Links para Once Human en el servidor Dream Y0002 NA. Entrega rápida y segura vía Discord.">
+  <meta name="description" content="Tienda oficial de Deviants y Energy Links para Once Human en el servidor Dream Y0002 NA. Entrega rápida y segura vía WhatsApp y Discord.">
   <meta property="og:title" content="Once Human Market | Deviants & Energy Links">
   <meta property="og:description" content="Compra Deviants de combate y territorio de nivel máximo y Energy Links al mejor precio en Dream Y0002 NA.">
   <meta property="og:type" content="website">
@@ -31,16 +31,9 @@
       <a href="#"><span class="store-name">Once Human Market</span></a>
       <span class="store-tagline"><i class="fa-solid fa-circle-check" style="color: #25d366;"></i> Deviants y Energy Links sin esperas</span>
     </div>
-    <div class="nav-actions">
-      <button id="btnOpenCartNav" class="btn-cart-nav" type="button" aria-label="Ver Carrito de compras">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <span>Carrito</span>
-        <span class="cart-nav-badge" id="navCartBadge">0</span>
-      </button>
-      <a href="https://discord.com/users/AegonTargaryen9" target="_blank" class="btn-discord-nav" rel="noopener noreferrer">
-        <i class="fa-brands fa-discord"></i> Discord: AegonTargaryen9
-      </a>
-    </div>
+    <a href="https://discord.com/users/AegonTargaryen9" target="_blank" class="btn-discord-nav" rel="noopener noreferrer">
+      <i class="fa-brands fa-discord"></i> Discord: AegonTargaryen9
+    </a>
   </header>
 
   <!-- Hero Section -->
@@ -52,7 +45,6 @@
       
       <div class="hero-server-badge">
         <i class="fa-solid fa-server"></i> Servidor: <span class="server-name">Dream Y0002 NA</span>
-        <span class="online-indicator"><span class="dot"></span> Entregas Activas</span>
       </div>
 
       <div class="hero-buttons">
@@ -65,7 +57,7 @@
   <!-- Sección: Calculadora de Energy Links -->
   <section id="calculator" class="section-container">
     <h2 class="section-title">Calculadora de Energy Links</h2>
-    <p class="section-subtitle">Cotiza al instante la cantidad de links que necesitas y agrégalos a tu pedido o pide directo por Discord.</p>
+    <p class="section-subtitle">Cotiza al instante la cantidad de links que necesitas y pide directo por WhatsApp.</p>
 
     <div class="calculator-box">
       <div class="input-group">
@@ -90,14 +82,9 @@
         <p class="calc-note">Tasa: $1.00 USD por cada 1,000,000 Energy Links.</p>
       </div>
 
-      <div class="calc-actions-grid">
-        <button id="btnAddLinksToCart" type="button" class="btn-add-links-cart">
-          <i class="fa-solid fa-cart-plus"></i> Agregar Links al Carrito
-        </button>
-        <button id="btnOrderLinks" type="button" class="btn-discord-direct">
-          <i class="fa-brands fa-discord"></i> Pedido Rápido Links
-        </button>
-      </div>
+      <button id="btnOrderLinks" type="button" class="btn-whatsapp-large">
+        <i class="fa-brands fa-whatsapp"></i> Ordenar Energy Links por WhatsApp
+      </button>
     </div>
   </section>
 
@@ -106,19 +93,34 @@
     <h2 class="section-title">Catálogo de Deviants Disponibles</h2>
     <p class="section-subtitle">Deviants de alto nivel listos para transferir de inmediato en Dream Y0002 NA</p>
 
-    <!-- Banner Rápido de Carrito Activo -->
-    <div class="cart-quick-banner" id="cartQuickBanner">
-      <div class="quick-banner-info">
-        <i class="fa-solid fa-cart-shopping"></i>
+    <!-- Carrito de Compras -->
+    <div class="deviant-cart" id="deviantCart">
+      <div class="cart-header">
         <div>
-          <strong id="quickBannerText">Tu carrito está listo</strong>
-          <span id="quickBannerSubtext">0 productos seleccionados</span>
+          <h3><i class="fa-solid fa-cart-shopping" style="color: #00f0ff;"></i> Tu Pedido de Deviants</h3>
+          <p>Selecciona los Deviants que deseas y envía la lista completa por WhatsApp.</p>
+        </div>
+        <div class="cart-header-actions">
+          <span class="cart-badge" id="cartBadge">0 seleccionados</span>
+          <button type="button" class="btn-clear-cart" id="btnClearCart" title="Vaciar lista">
+            <i class="fa-solid fa-trash-can"></i> Vaciar
+          </button>
         </div>
       </div>
-      <div class="quick-banner-actions">
-        <span class="quick-banner-total" id="quickBannerTotal">$0.00 USD</span>
-        <button type="button" class="btn-open-drawer" onclick="openCartDrawer()">
-          <i class="fa-solid fa-eye"></i> Ver Carrito
+
+      <div class="cart-body">
+        <div class="cart-empty" id="cartEmpty">No has agregado Deviants a tu pedido todavía. ¡Haz clic en <strong>Agregar</strong> en las tarjetas de abajo!</div>
+        <div class="cart-items" id="cartItems"></div>
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Total estimado:</span>
+          <strong id="cartTotal">$0.00 USD</strong>
+        </div>
+
+        <button id="btnSendCart" type="button" class="btn-send-cart" disabled>
+          <i class="fa-brands fa-whatsapp"></i> Enviar Pedido por WhatsApp
         </button>
       </div>
     </div>
@@ -128,7 +130,6 @@
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchDeviants" placeholder="Buscar Deviant por nombre o descripción (ej: Lobo, Wish, Sol...)" autocomplete="off">
-        <button type="button" id="btnClearSearch" class="btn-clear-search-input" aria-label="Limpiar búsqueda" style="display: none;">&times;</button>
       </div>
 
       <div class="filter-tabs">
@@ -174,7 +175,7 @@
         <span class="step-number">01</span>
         <div class="step-icon"><i class="fa-solid fa-list-check"></i></div>
         <h3>1. Arma tu Pedido</h3>
-        <p>Selecciona tus Deviants o calcula tus Energy Links y pulsa en el botón de Discord.</p>
+        <p>Selecciona tus Deviants o calcula tus Energy Links y pulsa en el botón de WhatsApp.</p>
       </div>
 
       <div class="step-card">
@@ -206,7 +207,7 @@
     <div class="feature-card">
       <i class="fa-solid fa-bolt"></i>
       <h3>Entrega Rápida</h3>
-      <p>Coordinación inmediata por Discord una vez verificado el pedido.</p>
+      <p>Coordinación inmediata por WhatsApp una vez verificado el pedido.</p>
     </div>
 
     <div class="feature-card">
@@ -220,13 +221,13 @@
   <footer id="contacto">
     <div class="footer-content">
       <h2>¿Tienes alguna duda o buscas un Deviant especial?</h2>
-      <p>Escríbeme por Discord y coordinamos tu entrega en <strong>Dream Y0002 NA</strong> al instante.</p>
+      <p>Escríbeme por WhatsApp y coordinamos tu entrega en <strong>Dream Y0002 NA</strong> al instante.</p>
 
-      <a href="https://discord.com/users/AegonTargaryen9"
+      <a href="https://wa.me/18494268576?text=Hola%20AegonTargaryen9,%20quiero%20informacion%20sobre%20tus%20servicios%20en%20Once%20Human"
          target="_blank"
-         class="btn-discord-footer"
+         class="btn-whatsapp-footer"
          rel="noopener noreferrer">
-        <i class="fa-brands fa-discord"></i> Hablar con Soporte por Discord
+        <i class="fa-brands fa-whatsapp"></i> Hablar con Soporte por WhatsApp
       </a>
     </div>
 
@@ -235,67 +236,14 @@
     </div>
   </footer>
 
-  <!-- Barra Flotante de Carrito para Móviles / Pantalla fija -->
+  <!-- Barra Flotante de Carrito para Móviles -->
   <div id="floatingCartBar" class="floating-cart-bar">
     <div class="floating-cart-info">
       <i class="fa-solid fa-cart-shopping" style="color: #00f0ff;"></i>
       <span id="floatingCartCount">0 items</span> •
       <strong id="floatingCartTotal">$0.00 USD</strong>
     </div>
-    <button type="button" class="btn-floating-view" onclick="openCartDrawer()">
-      <i class="fa-solid fa-bolt"></i> Ver Carrito
-    </button>
-  </div>
-
-  <!-- Panel Lateral Deslizante (Cart Drawer) -->
-  <div id="cartDrawer" class="cart-drawer-container" aria-hidden="true">
-    <div class="cart-drawer-backdrop" id="cartDrawerBackdrop"></div>
-    <aside class="cart-drawer" role="dialog" aria-labelledby="drawerTitle" aria-modal="true">
-      <div class="drawer-header">
-        <div class="drawer-title-wrap">
-          <i class="fa-solid fa-cart-shopping text-cyan"></i>
-          <h3 id="drawerTitle">Tu Carrito de Compra</h3>
-          <span class="drawer-count-badge" id="drawerBadge">0 items</span>
-        </div>
-        <button type="button" class="btn-drawer-close" id="btnDrawerClose" aria-label="Cerrar carrito">&times;</button>
-      </div>
-
-      <div class="drawer-body">
-        <div class="drawer-empty" id="drawerEmpty">
-          <div class="empty-icon"><i class="fa-solid fa-box-open"></i></div>
-          <h4>Tu carrito está vacío</h4>
-          <p>Agrega Deviants o Energy Links para armar tu pedido combinado.</p>
-          <a href="#deviants" class="btn-explore" onclick="closeCartDrawer()"><i class="fa-solid fa-paw"></i> Explorar Catálogo</a>
-        </div>
-        <div class="drawer-items" id="drawerItems"></div>
-      </div>
-
-      <div class="drawer-footer" id="drawerFooter">
-        <div class="drawer-summary">
-          <div class="summary-row" id="summaryDeviantsRow">
-            <span>Deviants seleccionados:</span>
-            <strong id="summaryDeviantsTotal">$0.00 USD</strong>
-          </div>
-          <div class="summary-row" id="summaryLinksRow">
-            <span>Energy Links:</span>
-            <strong id="summaryLinksTotal">$0.00 USD</strong>
-          </div>
-          <div class="summary-row total-row">
-            <span>Total Estimado:</span>
-            <strong id="drawerTotal">$0.00 USD</strong>
-          </div>
-        </div>
-
-        <div class="drawer-actions">
-          <button type="button" class="btn-checkout" id="btnDirectDiscordCheckout" onclick="checkoutDirectToDiscord()">
-            <i class="fa-brands fa-discord"></i> Enviar Pedido a Discord
-          </button>
-          <button type="button" class="btn-clear-drawer" id="btnClearDrawer">
-            <i class="fa-solid fa-trash-can"></i> Vaciar Carrito
-          </button>
-        </div>
-      </div>
-    </aside>
+    <a href="#deviantCart" class="btn-floating-view">Ver Pedido</a>
   </div>
 
   <!-- Toast de Notificaciones -->

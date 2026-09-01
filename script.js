@@ -4,12 +4,8 @@
 const PHONE_NUMBER = "18494268576";
 const SERVER_NAME = "Dream Y0002 NA";
 const VENDOR_NAME = "AegonTargaryen9";
-const DISCORD_USER_ID = "AegonTargaryen9";
-const DISCORD_PROFILE_URL = "https://discord.com/users/AegonTargaryen9";
-// Opcional: Coloca aquí tu Webhook URL de Discord si deseas que los pedidos lleguen automáticamente a tu servidor
-const DISCORD_WEBHOOK_URL = ""; 
 const PRICE_PER_1M_LINKS = 1.00;
-const STORAGE_KEY = "oh_market_cart_unified_v2";
+const STORAGE_KEY = "oh_market_cart_v1";
 
 // =====================================================
 // CATÁLOGO COMPLETO DE DEVIANTS
@@ -20,7 +16,7 @@ const DEVIANTS_DATA = [
     id: "medusa-polar",
     name: "Medusa Polar",
     category: "Starfall",
-    price: 20,
+    price: 25,
     img: "Medusa Polar.jpeg",
     desc: "Deviant Starfall exclusivo de alto rendimiento.",
     highlight: "Top Starfall"
@@ -29,7 +25,7 @@ const DEVIANTS_DATA = [
     id: "vudu",
     name: "Vudú",
     category: "Starfall",
-    price: 20,
+    price: 25,
     img: "Vudú.jpeg",
     desc: "Deviant Starfall versátil para combate y control.",
     highlight: "Popular"
@@ -38,7 +34,7 @@ const DEVIANTS_DATA = [
     id: "sol",
     name: "Sol",
     category: "Starfall",
-    price: 20,
+    price: 25,
     img: "Sol.jpeg",
     desc: "Deviant Starfall radiante de gran potencia.",
     highlight: "Top Tier"
@@ -47,7 +43,7 @@ const DEVIANTS_DATA = [
     id: "zapamandra",
     name: "Zapamandra",
     category: "Starfall",
-    price: 20,
+    price: 25,
     img: "Zapamandra.jpeg",
     desc: "Deviant Starfall elemental eléctrico letal.",
     highlight: "Nuevo"
@@ -56,7 +52,7 @@ const DEVIANTS_DATA = [
     id: "minicomilon-starfall",
     name: "Minicomilón",
     category: "Starfall",
-    price: 20,
+    price: 25,
     img: "Minicomilón.jpeg",
     desc: "Deviant Starfall de recolección y asistencia.",
     highlight: "Destacado"
@@ -67,7 +63,7 @@ const DEVIANTS_DATA = [
     id: "lobo",
     name: "Lobo",
     category: "Lunar",
-    price: 15,
+    price: 20,
     img: "Lobo.jpeg",
     desc: "Deviant Lunar de agilidad y ataque veloz.",
     highlight: "Top Combate"
@@ -76,7 +72,7 @@ const DEVIANTS_DATA = [
     id: "camara",
     name: "Cámara",
     category: "Lunar",
-    price: 15,
+    price: 20,
     img: "Cámara.jpeg",
     desc: "Deviant Lunar de soporte estratégico y visión.",
     highlight: "Utilidad"
@@ -85,7 +81,7 @@ const DEVIANTS_DATA = [
     id: "pyro-dino",
     name: "Pyro Dino",
     category: "Lunar",
-    price: 15,
+    price: 20,
     img: "Pirodino.jpeg",
     desc: "Deviant Lunar con daño ígneo en área continuo.",
     highlight: "Daño Fuego"
@@ -94,7 +90,7 @@ const DEVIANTS_DATA = [
     id: "hada-nieves",
     name: "Hada de las Nieves",
     category: "Lunar",
-    price: 15,
+    price: 20,
     img: "Hada de las nieves.jpeg",
     desc: "Deviant Lunar con congelación y ralentización táctica.",
     highlight: "Control Frío"
@@ -103,7 +99,7 @@ const DEVIANTS_DATA = [
     id: "zenopurificador",
     name: "Zenopurificador",
     category: "Lunar",
-    price: 15,
+    price: 20,
     img: "Zenopurificador.jpeg",
     desc: "Deviant Lunar de purificación y soporte de territorio.",
     highlight: "Territorio"
@@ -112,7 +108,7 @@ const DEVIANTS_DATA = [
     id: "mariposa-lunar",
     name: "Mariposa Lunar",
     category: "Lunar",
-    price: 15,
+    price: 10,
     img: "Mariposa Lunar.jpeg",
     desc: "Deviant Lunar ágil y ligera para apoyo inicial.",
     highlight: "Económico"
@@ -161,7 +157,7 @@ const DEVIANTS_DATA = [
     id: "rebecca-aberrante",
     name: "Rebecca Aberrante",
     category: "Aberrante",
-    price: 15,
+    price: 20,
     img: "Rebecca aberrante.jpeg",
     desc: "Deviant Aberrante de élite con gran sinergia de combate.",
     highlight: "Elite"
@@ -170,7 +166,7 @@ const DEVIANTS_DATA = [
     id: "dr-osito-aberrante",
     name: "Dr. Osito Aberrante",
     category: "Aberrante",
-    price: 15,
+    price: 20,
     img: "Dr Osito Aberrante.jpeg",
     desc: "Deviant Aberrante con soporte de tanque y curación.",
     highlight: "Tanque/Soporte"
@@ -310,31 +306,17 @@ const DEVIANTS_DATA = [
 // =====================================================
 let currentFilter = "all";
 let currentSearchQuery = "";
-// Carrito unificado: almacena tanto Deviants como Energy Links
-let unifiedCart = [];
+let deviantsCart = [];
 
 // =====================================================
 // UTILIDADES DE FORMATO
 // =====================================================
 function formatUSD(value) {
-  return `$${Number(value || 0).toFixed(2)} USD`;
+  return `$${Number(value).toFixed(2)} USD`;
 }
 
 function formatNumber(num) {
-  return Number(num || 0).toLocaleString('es-ES');
-}
-
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str).replace(/[&<>"']/g, function(m) {
-    return {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;'
-    }[m];
-  });
+  return Number(num).toLocaleString('es-ES');
 }
 
 // =====================================================
@@ -342,9 +324,9 @@ function escapeHtml(str) {
 // =====================================================
 function saveCartToStorage() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(unifiedCart));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(deviantsCart));
   } catch (e) {
-    console.warn("No se pudo guardar el carrito:", e);
+    console.warn("No se pudo guardar el carrito en localStorage:", e);
   }
 }
 
@@ -354,12 +336,12 @@ function loadCartFromStorage() {
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed)) {
-        unifiedCart = parsed;
+        deviantsCart = parsed;
       }
     }
   } catch (e) {
     console.warn("No se pudo cargar el carrito:", e);
-    unifiedCart = [];
+    deviantsCart = [];
   }
 }
 
@@ -368,24 +350,21 @@ function loadCartFromStorage() {
 // =====================================================
 const linkAmountInput = document.getElementById('linkAmount');
 const totalPriceEl = document.getElementById('totalPrice');
-const btnAddLinksToCart = document.getElementById('btnAddLinksToCart');
 const btnOrderLinks = document.getElementById('btnOrderLinks');
 const quickBtns = document.querySelectorAll('.btn-quick-amount');
 
-function getCalculatedLinksPrice() {
-  const amount = parseFloat(linkAmountInput?.value) || 0;
-  return (amount / 1000000) * PRICE_PER_1M_LINKS;
-}
-
-function updateCalculatorDisplay() {
+function calculatePrice() {
   if (!linkAmountInput || !totalPriceEl) return;
-  const total = getCalculatedLinksPrice();
+
+  const amount = parseFloat(linkAmountInput.value) || 0;
+  const total = (amount / 1000000) * PRICE_PER_1M_LINKS;
+
   totalPriceEl.textContent = formatUSD(total);
 }
 
 if (linkAmountInput) {
-  linkAmountInput.addEventListener('input', updateCalculatorDisplay);
-  updateCalculatorDisplay();
+  linkAmountInput.addEventListener('input', calculatePrice);
+  calculatePrice();
 }
 
 if (quickBtns.length > 0) {
@@ -398,466 +377,30 @@ if (quickBtns.length > 0) {
         const currentVal = parseInt(linkAmountInput.value, 10) || 0;
         linkAmountInput.value = currentVal + addVal;
       }
-      updateCalculatorDisplay();
+      calculatePrice();
       pulseElement(linkAmountInput);
     });
   });
 }
 
-// Botón: Agregar Links al Carrito Unificado
-if (btnAddLinksToCart) {
-  btnAddLinksToCart.addEventListener('click', () => {
-    const rawAmount = parseFloat(linkAmountInput?.value) || 0;
-    if (rawAmount < 100000) {
-      alert("Por favor ingresa al menos 100,000 Energy Links.");
-      linkAmountInput?.focus();
-      return;
-    }
-
-    addLinksToCart(rawAmount);
-    openCartDrawer();
-  });
-}
-
-// Botón: Pedido Rápido de Links (Directo a Discord)
 if (btnOrderLinks) {
   btnOrderLinks.addEventListener('click', () => {
-    const rawAmount = parseFloat(linkAmountInput?.value) || 0;
-    if (rawAmount < 100000) {
-      alert("Por favor ingresa al menos 100,000 Energy Links.");
+    const rawVal = parseFloat(linkAmountInput?.value) || 0;
+    const price = totalPriceEl ? totalPriceEl.textContent : "$0.00 USD";
+
+    if (rawVal <= 0) {
+      alert("Por favor ingresa una cantidad válida de Energy Links.");
       linkAmountInput?.focus();
       return;
     }
 
-    addLinksToCart(rawAmount);
-    checkoutDirectToDiscord();
+    const formattedAmount = formatNumber(rawVal);
+    const message =
+      `Hola ${VENDOR_NAME}, quiero comprar ${formattedAmount} Energy Links en el servidor ${SERVER_NAME}. Precio estimado: ${price}. ¿Tienes disponibilidad para entrega inmediata?`;
+
+    const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, '_blank');
   });
-}
-
-// =====================================================
-// OPERACIONES DEL CARRITO UNIFICADO
-// =====================================================
-function addDeviantById(id) {
-  const itemData = DEVIANTS_DATA.find(d => d.id === id);
-  if (!itemData) return;
-
-  const existingIndex = unifiedCart.findIndex(item => item.type === 'deviant' && item.id === id);
-
-  if (existingIndex > -1) {
-    unifiedCart[existingIndex].quantity += 1;
-  } else {
-    unifiedCart.push({
-      type: 'deviant',
-      id: itemData.id,
-      name: itemData.name,
-      category: itemData.category,
-      price: itemData.price,
-      quantity: 1,
-      img: itemData.img
-    });
-  }
-
-  saveCartToStorage();
-  renderCart();
-  showCartToast(`¡${itemData.name} añadido al carrito!`);
-  pulseCartBadges();
-}
-
-function addLinksToCart(amount) {
-  const price = (amount / 1000000) * PRICE_PER_1M_LINKS;
-  const existingLinksIndex = unifiedCart.findIndex(item => item.type === 'links');
-
-  if (existingLinksIndex > -1) {
-    unifiedCart[existingLinksIndex].amountLinks += amount;
-    unifiedCart[existingLinksIndex].price = (unifiedCart[existingLinksIndex].amountLinks / 1000000) * PRICE_PER_1M_LINKS;
-  } else {
-    unifiedCart.push({
-      type: 'links',
-      id: 'energy-links',
-      name: 'Energy Links',
-      category: 'Divisa',
-      amountLinks: amount,
-      price: price,
-      quantity: 1
-    });
-  }
-
-  saveCartToStorage();
-  renderCart();
-  showCartToast(`¡${formatNumber(amount)} Energy Links añadidos al carrito!`);
-  pulseCartBadges();
-}
-
-function increaseCartItem(index) {
-  if (!unifiedCart[index]) return;
-  const item = unifiedCart[index];
-
-  if (item.type === 'links') {
-    item.amountLinks += 1000000;
-    item.price = (item.amountLinks / 1000000) * PRICE_PER_1M_LINKS;
-  } else {
-    item.quantity += 1;
-  }
-
-  saveCartToStorage();
-  renderCart();
-}
-
-function decreaseCartItem(index) {
-  if (!unifiedCart[index]) return;
-  const item = unifiedCart[index];
-
-  if (item.type === 'links') {
-    if (item.amountLinks > 1000000) {
-      item.amountLinks -= 1000000;
-      item.price = (item.amountLinks / 1000000) * PRICE_PER_1M_LINKS;
-    } else {
-      unifiedCart.splice(index, 1);
-    }
-  } else {
-    if (item.quantity > 1) {
-      item.quantity -= 1;
-    } else {
-      unifiedCart.splice(index, 1);
-    }
-  }
-
-  saveCartToStorage();
-  renderCart();
-}
-
-function removeCartItem(index) {
-  if (!unifiedCart[index]) return;
-  unifiedCart.splice(index, 1);
-  saveCartToStorage();
-  renderCart();
-}
-
-function clearCart() {
-  if (unifiedCart.length === 0) return;
-  if (confirm("¿Estás seguro de que deseas vaciar todos los productos del carrito?")) {
-    unifiedCart = [];
-    saveCartToStorage();
-    renderCart();
-    showCartToast("Carrito vaciado.");
-  }
-}
-
-// =====================================================
-// RENDERIZADO DEL CARRITO & SINCRONIZACIÓN DE UI
-// =====================================================
-function renderCart() {
-  const navBadge = document.getElementById('navCartBadge');
-  const drawerBadge = document.getElementById('drawerBadge');
-  const drawerItems = document.getElementById('drawerItems');
-  const drawerEmpty = document.getElementById('drawerEmpty');
-  const drawerFooter = document.getElementById('drawerFooter');
-  const summaryDeviantsTotal = document.getElementById('summaryDeviantsTotal');
-  const summaryLinksTotal = document.getElementById('summaryLinksTotal');
-  const summaryDeviantsRow = document.getElementById('summaryDeviantsRow');
-  const summaryLinksRow = document.getElementById('summaryLinksRow');
-  const drawerTotal = document.getElementById('drawerTotal');
-  const btnDirectDiscordCheckout = document.getElementById('btnDirectDiscordCheckout');
-
-  const quickBanner = document.getElementById('cartQuickBanner');
-  const quickBannerText = document.getElementById('quickBannerText');
-  const quickBannerSubtext = document.getElementById('quickBannerSubtext');
-  const quickBannerTotal = document.getElementById('quickBannerTotal');
-
-  const floatingBar = document.getElementById('floatingCartBar');
-  const floatingCount = document.getElementById('floatingCartCount');
-  const floatingTotal = document.getElementById('floatingCartTotal');
-
-  // Cálculos totales
-  let totalItemsCount = 0;
-  let deviantsSubtotal = 0;
-  let linksSubtotal = 0;
-
-  unifiedCart.forEach(item => {
-    if (item.type === 'links') {
-      totalItemsCount += 1;
-      linksSubtotal += item.price;
-    } else {
-      totalItemsCount += item.quantity;
-      deviantsSubtotal += item.price * item.quantity;
-    }
-  });
-
-  const grandTotal = deviantsSubtotal + linksSubtotal;
-
-  // Actualizar badges
-  if (navBadge) navBadge.textContent = totalItemsCount;
-  if (drawerBadge) drawerBadge.textContent = `${totalItemsCount} ${totalItemsCount === 1 ? 'item' : 'items'}`;
-
-  // Actualizar Banner rápido
-  if (quickBanner && quickBannerText && quickBannerSubtext && quickBannerTotal) {
-    if (totalItemsCount > 0) {
-      quickBanner.style.borderColor = 'var(--primary-cyan)';
-      quickBannerText.textContent = `Tu pedido tiene ${totalItemsCount} ${totalItemsCount === 1 ? 'ítem' : 'ítems'} listo(s)`;
-      quickBannerSubtext.textContent = `Deviants: ${formatUSD(deviantsSubtotal)} • Links: ${formatUSD(linksSubtotal)}`;
-      quickBannerTotal.textContent = formatUSD(grandTotal);
-    } else {
-      quickBanner.style.borderColor = '';
-      quickBannerText.textContent = 'Tu carrito está listo';
-      quickBannerSubtext.textContent = '0 productos seleccionados';
-      quickBannerTotal.textContent = formatUSD(0);
-    }
-  }
-
-  // Actualizar Barra flotante móvil
-  if (floatingBar && floatingCount && floatingTotal) {
-    if (totalItemsCount > 0) {
-      floatingBar.classList.add('visible');
-      floatingCount.textContent = `${totalItemsCount} ${totalItemsCount === 1 ? 'ítem' : 'ítems'}`;
-      floatingTotal.textContent = formatUSD(grandTotal);
-    } else {
-      floatingBar.classList.remove('visible');
-    }
-  }
-
-  // Actualizar Drawer
-  if (!drawerItems || !drawerEmpty || !drawerFooter) return;
-
-  if (unifiedCart.length === 0) {
-    drawerEmpty.style.display = 'block';
-    drawerItems.innerHTML = '';
-    drawerFooter.style.display = 'none';
-    if (btnDirectDiscordCheckout) btnDirectDiscordCheckout.disabled = true;
-    return;
-  }
-
-  drawerEmpty.style.display = 'none';
-  drawerFooter.style.display = 'block';
-  if (btnDirectDiscordCheckout) btnDirectDiscordCheckout.disabled = false;
-
-  // Actualizar subtotales en drawer
-  if (summaryDeviantsRow && summaryDeviantsTotal) {
-    summaryDeviantsRow.style.display = deviantsSubtotal > 0 ? 'flex' : 'none';
-    summaryDeviantsTotal.textContent = formatUSD(deviantsSubtotal);
-  }
-
-  if (summaryLinksRow && summaryLinksTotal) {
-    summaryLinksRow.style.display = linksSubtotal > 0 ? 'flex' : 'none';
-    summaryLinksTotal.textContent = formatUSD(linksSubtotal);
-  }
-
-  if (drawerTotal) {
-    drawerTotal.textContent = formatUSD(grandTotal);
-  }
-
-  // Renderizar items en Drawer
-  drawerItems.innerHTML = unifiedCart.map((item, index) => {
-    if (item.type === 'links') {
-      return `
-        <div class="drawer-item">
-          <div class="drawer-item-title">
-            <strong><i class="fa-solid fa-bolt text-cyan"></i> ${formatNumber(item.amountLinks)} Energy Links</strong>
-            <div class="drawer-item-meta">
-              <span class="item-badge badge-links">Energy Links</span>
-              <span>Subtotal: <strong>${formatUSD(item.price)}</strong></span>
-            </div>
-          </div>
-          <div class="drawer-item-actions">
-            <button type="button" class="btn-qty" onclick="decreaseCartItem(${index})" title="Restar 1M Links" aria-label="Restar 1M Links">−</button>
-            <button type="button" class="btn-qty" onclick="increaseCartItem(${index})" title="Sumar 1M Links" aria-label="Sumar 1M Links">+</button>
-            <button type="button" class="btn-remove" onclick="removeCartItem(${index})" title="Eliminar Links del pedido" aria-label="Eliminar Links">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </div>
-        </div>
-      `;
-    } else {
-      return `
-        <div class="drawer-item">
-          <div class="drawer-item-title">
-            <strong>${item.name}</strong>
-            <div class="drawer-item-meta">
-              <span class="item-badge badge-deviant">${item.category}</span>
-              <span>${item.quantity} × ${formatUSD(item.price)} = <strong>${formatUSD(item.price * item.quantity)}</strong></span>
-            </div>
-          </div>
-          <div class="drawer-item-actions">
-            <button type="button" class="btn-qty" onclick="decreaseCartItem(${index})" title="Restar uno" aria-label="Restar 1">−</button>
-            <span class="cart-item-qty">${item.quantity}</span>
-            <button type="button" class="btn-qty" onclick="increaseCartItem(${index})" title="Sumar uno" aria-label="Sumar 1">+</button>
-            <button type="button" class="btn-remove" onclick="removeCartItem(${index})" title="Eliminar ${item.name}" aria-label="Eliminar ${item.name}">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </div>
-        </div>
-      `;
-    }
-  }).join('');
-}
-
-// =====================================================
-// CONTROL DEL DRAWER LATERAL
-// =====================================================
-const cartDrawer = document.getElementById('cartDrawer');
-const cartDrawerBackdrop = document.getElementById('cartDrawerBackdrop');
-const btnDrawerClose = document.getElementById('btnDrawerClose');
-const btnOpenCartNav = document.getElementById('btnOpenCartNav');
-const btnClearDrawer = document.getElementById('btnClearDrawer');
-
-function openCartDrawer() {
-  if (!cartDrawer) return;
-  renderCart();
-  cartDrawer.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeCartDrawer() {
-  if (!cartDrawer) return;
-  cartDrawer.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-}
-
-if (btnOpenCartNav) btnOpenCartNav.addEventListener('click', openCartDrawer);
-if (btnDrawerClose) btnDrawerClose.addEventListener('click', closeCartDrawer);
-if (cartDrawerBackdrop) cartDrawerBackdrop.addEventListener('click', closeCartDrawer);
-if (btnClearDrawer) btnClearDrawer.addEventListener('click', clearCart);
-
-// =====================================================
-// ENVÍO DIRECTO A DISCORD (SIN FORMULARIOS NI DATOS EXIGIDOS)
-// =====================================================
-
-// Generador de Mensaje de Pedido para Discord
-function buildDiscordOrderMessage() {
-  let grandTotal = 0;
-  let totalDeviantsCount = 0;
-  let totalLinksAmount = 0;
-
-  const lines = unifiedCart.map(item => {
-    if (item.type === 'links') {
-      totalLinksAmount += item.amountLinks;
-      grandTotal += item.price;
-      return `▪ ⚡ ${formatNumber(item.amountLinks)} Energy Links — ${formatUSD(item.price)}`;
-    } else {
-      totalDeviantsCount += item.quantity;
-      const sub = item.price * item.quantity;
-      grandTotal += sub;
-      return `▪ 🐾 ${item.quantity}x ${item.name} (${item.category}) — ${formatUSD(sub)}`;
-    }
-  });
-
-  const now = new Date().toLocaleString('es-ES');
-
-  return (
-    `🛒 **NUEVO PEDIDO — ONCE HUMAN MARKET**\n` +
-    `━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-    `📍 **Servidor:** ${SERVER_NAME}\n` +
-    `━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-    `📦 **ITEMS DEL PEDIDO:**\n` +
-    `${lines.join('\n')}\n` +
-    `━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-    `💰 **TOTAL A PAGAR:** **${formatUSD(grandTotal)}**\n` +
-    `🕒 **Fecha:** ${now}\n\n` +
-    `¡Hola ${VENDOR_NAME}! Deseo coordinar la entrega y el pago in-game de este pedido en *${SERVER_NAME}*. ¿Tienes disponibilidad?`
-  );
-}
-
-// Copiar texto al portapapeles con compatibilidad amplia
-async function copyToClipboard(text) {
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } else {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-999999px";
-      textArea.style.top = "-999999px";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      const success = document.execCommand('copy');
-      textArea.remove();
-      return success;
-    }
-  } catch (err) {
-    console.warn("Error copiando al portapapeles:", err);
-    return false;
-  }
-}
-
-// Envío al servidor backend (que a su vez envía a Discord)
-async function sendOrderToServer() {
-  if (unifiedCart.length === 0) return false;
-
-  try {
-    // Preparar datos del pedido
-    const orderData = {
-      items: unifiedCart.map(item => ({
-        type: item.type,
-        id: item.id,
-        name: item.name,
-        category: item.category,
-        quantity: item.quantity,
-        amountLinks: item.amountLinks,
-        price: item.price
-      })),
-      serverName: SERVER_NAME,
-      timestamp: new Date().toISOString()
-    };
-
-    // Intentar enviar al servidor local primero
-    const response = await fetch('http://localhost:3000/api/order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderData)
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      console.log('✅ Pedido enviado al servidor:', result);
-      return true;
-    }
-  } catch (err) {
-    console.warn('⚠️ No se pudo conectar al servidor backend:', err.message);
-    // El pedido se puede seguir procesando incluso sin conexión al servidor
-    return false;
-  }
-}
-
-// Envío Directo en 1 Clic a Discord
-async function checkoutDirectToDiscord() {
-  if (unifiedCart.length === 0) {
-    alert("Tu carrito está vacío. Agrega Deviants o Energy Links antes de pedir.");
-    return;
-  }
-
-  // 1. Mostrar feedback inicial
-  showCartToast("📤 Enviando pedido a Discord...");
-
-  // 2. Enviar al servidor backend
-  const serverResponse = await sendOrderToServer();
-
-  // 3. Generar mensaje para portapapeles (como backup)
-  const messageText = buildDiscordOrderMessage();
-  const copied = await copyToClipboard(messageText);
-
-  // 4. Feedback visual
-  if (serverResponse) {
-    showCartToast("✅ ¡Pedido enviado a Discord exitosamente!");
-  } else if (copied) {
-    showCartToast("✅ ¡Pedido copiado al portapapeles! Abriendo Discord...");
-  } else {
-    showCartToast("⚠️ Abriendo Discord para completar el pedido...");
-  }
-
-  // 5. Cerrar drawer y abrir Discord de AegonTargaryen9
-  closeCartDrawer();
-  setTimeout(() => {
-    window.open(DISCORD_PROFILE_URL, '_blank');
-  }, 500);
-
-  // 6. Limpiar el carrito después de 2 segundos
-  setTimeout(() => {
-    unifiedCart = [];
-    saveCartToStorage();
-    renderCart();
-  }, 2000);
 }
 
 // =====================================================
@@ -865,13 +408,15 @@ async function checkoutDirectToDiscord() {
 // =====================================================
 const cardsGrid = document.getElementById('cardsGrid');
 const searchInput = document.getElementById('searchDeviants');
-const btnClearSearch = document.getElementById('btnClearSearch');
 const filterBtns = document.querySelectorAll('.filter-btn');
 const resultsCountEl = document.getElementById('resultsCount');
 
 function getFilteredDeviants() {
   return DEVIANTS_DATA.filter(item => {
+    // Filtro de categoría
     const matchesCategory = currentFilter === "all" || item.category.toLowerCase() === currentFilter.toLowerCase();
+
+    // Filtro de búsqueda por texto
     const query = currentSearchQuery.trim().toLowerCase();
     const matchesSearch = !query || 
       item.name.toLowerCase().includes(query) || 
@@ -934,42 +479,41 @@ function renderCatalog() {
     </div>
   `).join('');
 
+  // Re-enlazar eventos de imágenes para el modal
   attachImageModalEvents();
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>"']/g, function(m) {
+    return {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[m];
+  });
 }
 
 function resetFilters() {
   currentFilter = "all";
   currentSearchQuery = "";
   if (searchInput) searchInput.value = "";
-  if (btnClearSearch) btnClearSearch.style.display = 'none';
   filterBtns.forEach(btn => {
     btn.classList.toggle('active', btn.dataset.category === "all");
   });
   renderCatalog();
 }
 
-// Búsqueda en tiempo real
+// Eventos de Búsqueda y Filtros
 if (searchInput) {
   searchInput.addEventListener('input', (e) => {
     currentSearchQuery = e.target.value;
-    if (btnClearSearch) {
-      btnClearSearch.style.display = currentSearchQuery.length > 0 ? 'flex' : 'none';
-    }
     renderCatalog();
   });
 }
 
-if (btnClearSearch) {
-  btnClearSearch.addEventListener('click', () => {
-    if (searchInput) searchInput.value = "";
-    currentSearchQuery = "";
-    btnClearSearch.style.display = 'none';
-    renderCatalog();
-    searchInput?.focus();
-  });
-}
-
-// Filtro de pestañas
 if (filterBtns.length > 0) {
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -979,6 +523,167 @@ if (filterBtns.length > 0) {
       renderCatalog();
     });
   });
+}
+
+// =====================================================
+// CARRITO DE COMPRAS Y PEDIDOS
+// =====================================================
+function addDeviantById(id) {
+  const itemData = DEVIANTS_DATA.find(d => d.id === id);
+  if (!itemData) return;
+
+  const existing = deviantsCart.find(item => item.id === id);
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    deviantsCart.push({
+      id: itemData.id,
+      name: itemData.name,
+      category: itemData.category,
+      price: itemData.price,
+      quantity: 1
+    });
+  }
+
+  saveCartToStorage();
+  renderCart();
+  showCartToast(`¡${itemData.name} añadido al pedido!`);
+  pulseCartBadge();
+}
+
+function addToCart(button, deviantName) {
+  const item = DEVIANTS_DATA.find(d => d.name === deviantName) || DEVIANTS_DATA.find(d => d.name.toLowerCase() === (deviantName || "").toLowerCase());
+  if (item) {
+    addDeviantById(item.id);
+  }
+}
+
+function increaseCartItem(index) {
+  if (!deviantsCart[index]) return;
+  deviantsCart[index].quantity += 1;
+  saveCartToStorage();
+  renderCart();
+  pulseCartBadge();
+}
+
+function decreaseCartItem(index) {
+  if (!deviantsCart[index]) return;
+  if (deviantsCart[index].quantity > 1) {
+    deviantsCart[index].quantity -= 1;
+  } else {
+    deviantsCart.splice(index, 1);
+  }
+  saveCartToStorage();
+  renderCart();
+  pulseCartBadge();
+}
+
+function removeCartItem(index) {
+  if (!deviantsCart[index]) return;
+  deviantsCart.splice(index, 1);
+  saveCartToStorage();
+  renderCart();
+  pulseCartBadge();
+}
+
+function clearCart() {
+  if (deviantsCart.length === 0) return;
+  if (confirm("¿Deseas vaciar todos los Deviants seleccionados?")) {
+    deviantsCart = [];
+    saveCartToStorage();
+    renderCart();
+    pulseCartBadge();
+  }
+}
+
+function renderCart() {
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartEmptyEl = document.getElementById('cartEmpty');
+  const cartBadge = document.getElementById('cartBadge');
+  const cartTotalEl = document.getElementById('cartTotal');
+  const sendCartBtn = document.getElementById('btnSendCart');
+  const floatingCartBar = document.getElementById('floatingCartBar');
+  const floatingCount = document.getElementById('floatingCartCount');
+  const floatingTotal = document.getElementById('floatingCartTotal');
+
+  const totalItems = deviantsCart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = deviantsCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  // Actualizar barra flotante móvil
+  if (floatingCartBar && floatingCount && floatingTotal) {
+    if (totalItems > 0) {
+      floatingCartBar.classList.add('visible');
+      floatingCount.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'items'}`;
+      floatingTotal.textContent = formatUSD(totalPrice);
+    } else {
+      floatingCartBar.classList.remove('visible');
+    }
+  }
+
+  if (!cartItemsEl || !cartEmptyEl || !cartBadge || !cartTotalEl || !sendCartBtn) {
+    return;
+  }
+
+  cartItemsEl.innerHTML = '';
+
+  if (deviantsCart.length === 0) {
+    cartEmptyEl.style.display = 'block';
+    sendCartBtn.disabled = true;
+    cartBadge.textContent = '0 seleccionados';
+    cartTotalEl.textContent = formatUSD(0);
+    return;
+  }
+
+  cartEmptyEl.style.display = 'none';
+  cartBadge.textContent = `${totalItems} ${totalItems === 1 ? 'seleccionado' : 'seleccionados'}`;
+
+  deviantsCart.forEach((item, index) => {
+    const itemEl = document.createElement('div');
+    itemEl.className = 'cart-item';
+    itemEl.innerHTML = `
+      <div class="cart-item-title">
+        <strong>${item.name}</strong>
+        <div class="cart-item-meta">
+          <span class="cart-item-tag">${item.category}</span>
+          <span>${item.quantity} × ${formatUSD(item.price)} = <strong>${formatUSD(item.price * item.quantity)}</strong></span>
+        </div>
+      </div>
+      <div class="cart-item-actions">
+        <button type="button" class="btn-qty" onclick="decreaseCartItem(${index})" title="Restar uno" aria-label="Restar 1">−</button>
+        <span class="cart-item-qty">${item.quantity}</span>
+        <button type="button" class="btn-qty" onclick="increaseCartItem(${index})" title="Añadir uno" aria-label="Sumar 1">+</button>
+        <button type="button" class="btn-remove" onclick="removeCartItem(${index})" title="Eliminar del pedido" aria-label="Eliminar ${item.name}">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+    `;
+    cartItemsEl.appendChild(itemEl);
+  });
+
+  cartTotalEl.textContent = formatUSD(totalPrice);
+  sendCartBtn.disabled = false;
+}
+
+function sendCartWhatsApp() {
+  if (deviantsCart.length === 0) return;
+
+  const totalItems = deviantsCart.reduce((sum, item) => sum + item.quantity, 0);
+  const total = deviantsCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const cartLines = deviantsCart.map(item =>
+    `▪ ${item.quantity}x ${item.name} (${item.category}) — ${formatUSD(item.price * item.quantity)}`
+  );
+
+  const message =
+    `¡Hola ${VENDOR_NAME}! Quiero realizar el siguiente pedido de Deviants en el servidor *${SERVER_NAME}*:\n\n` +
+    `${cartLines.join('\n')}\n\n` +
+    `📦 Total de Deviants: ${totalItems}\n` +
+    `💰 Monto Total: *${formatUSD(total)}*\n\n` +
+    `¿Los tienes listos para transferir in-game?`;
+
+  const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, '_blank');
 }
 
 // =====================================================
@@ -995,15 +700,15 @@ function showCartToast(message) {
   clearTimeout(toastTimeout);
   toastTimeout = setTimeout(() => {
     toast.classList.remove('visible');
-  }, 2400);
+  }, 2200);
 }
 
-function pulseCartBadges() {
-  const navBadge = document.getElementById('navCartBadge');
-  if (navBadge) {
-    navBadge.classList.remove('pop');
-    void navBadge.offsetWidth;
-    navBadge.classList.add('pop');
+function pulseCartBadge() {
+  const badge = document.getElementById('cartBadge');
+  if (badge) {
+    badge.classList.remove('pop');
+    void badge.offsetWidth;
+    badge.classList.add('pop');
   }
 }
 
@@ -1062,13 +767,8 @@ function attachImageModalEvents() {
 
 if (imageModalClose) imageModalClose.addEventListener('click', closeImageModal);
 if (imageModalBackdrop) imageModalBackdrop.addEventListener('click', closeImageModal);
-
-// Atajo Teclado Escape
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeImageModal();
-    closeCartDrawer();
-  }
+  if (e.key === 'Escape') closeImageModal();
 });
 
 // =====================================================
@@ -1080,7 +780,6 @@ if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const ctx = canvas.getContext('2d');
   let particlesArray = [];
   let animationFrameId;
-  let isRunning = true;
 
   function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -1134,7 +833,6 @@ if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   }
 
   function animateParticles() {
-    if (!isRunning) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     particlesArray.forEach(p => {
       p.update();
@@ -1143,17 +841,6 @@ if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     ctx.globalAlpha = 1;
     animationFrameId = requestAnimationFrame(animateParticles);
   }
-
-  // Pausar animación cuando la pestaña está en segundo plano para ahorrar batería/CPU
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      isRunning = false;
-      cancelAnimationFrame(animationFrameId);
-    } else {
-      isRunning = true;
-      animateParticles();
-    }
-  });
 
   resizeCanvas();
   animateParticles();
@@ -1185,4 +872,14 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCartFromStorage();
   renderCatalog();
   renderCart();
+
+  const sendCartBtn = document.getElementById('btnSendCart');
+  if (sendCartBtn) {
+    sendCartBtn.addEventListener('click', sendCartWhatsApp);
+  }
+
+  const clearCartBtn = document.getElementById('btnClearCart');
+  if (clearCartBtn) {
+    clearCartBtn.addEventListener('click', clearCart);
+  }
 });
