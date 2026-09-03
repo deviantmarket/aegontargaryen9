@@ -300,11 +300,11 @@ const DEVIANTS_DATA = [
     highlight: "Cocina"
   },
   {
-    id: "muneco-papel-infrasonico",
-    name: "Muñeco de papel infrasónico",
+    id: "Muñeco-papel-infrasonico",
+    name: "Muñeco de papel infrasonico",
     category: "Otros",
     price: 10,
-    img: "Muñeco de papel infrasónico.jpeg",
+    img: "Muñeco de papel infrasonico.jpeg",
     desc: "Deviant de apoyo con habilidades de resonancia infrasónica.",
     highlight: "Nuevo"
   },
