@@ -300,7 +300,7 @@ const DEVIANTS_DATA = [
     highlight: "Cocina"
   },
   {
-    id: "Muñeco-papel-infrasonico",
+    id: "muñeco-papel-infrasonico",
     name: "Muñeco de papel infrasonico",
     category: "Otros",
     price: 10,
