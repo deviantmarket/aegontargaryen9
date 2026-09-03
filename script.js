@@ -1,11 +1,10 @@
 // =====================================================
 // CONFIGURACIÓN DE LA TIENDA
 // =====================================================
-const PHONE_NUMBER = "18494268576";
 const SERVER_NAME = "Dream Y0002 NA";
-const VENDOR_NAME = "AegonTargaryen9";
 const PRICE_PER_1M_LINKS = 1.00;
 const STORAGE_KEY = "oh_market_cart_v1";
+const ORDER_ENDPOINT = "/.netlify/functions/discord-orders";
 
 // =====================================================
 // CATÁLOGO COMPLETO DE DEVIANTS
@@ -315,10 +314,6 @@ function formatUSD(value) {
   return `$${Number(value).toFixed(2)} USD`;
 }
 
-function formatNumber(num) {
-  return Number(num).toLocaleString('es-ES');
-}
-
 // =====================================================
 // PERSISTENCIA LOCALSTORAGE
 // =====================================================
@@ -383,10 +378,21 @@ if (quickBtns.length > 0) {
   });
 }
 
+async function sendOrderToDiscord(order) {
+  const response = await fetch(ORDER_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(order)
+  });
+
+  if (!response.ok) {
+    throw new Error('No se pudo enviar el pedido.');
+  }
+}
+
 if (btnOrderLinks) {
-  btnOrderLinks.addEventListener('click', () => {
+  btnOrderLinks.addEventListener('click', async () => {
     const rawVal = parseFloat(linkAmountInput?.value) || 0;
-    const price = totalPriceEl ? totalPriceEl.textContent : "$0.00 USD";
 
     if (rawVal <= 0) {
       alert("Por favor ingresa una cantidad válida de Energy Links.");
@@ -394,12 +400,20 @@ if (btnOrderLinks) {
       return;
     }
 
-    const formattedAmount = formatNumber(rawVal);
-    const message =
-      `Hola ${VENDOR_NAME}, quiero comprar ${formattedAmount} Energy Links en el servidor ${SERVER_NAME}. Precio estimado: ${price}. ¿Tienes disponibilidad para entrega inmediata?`;
-
-    const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
-    window.open(waUrl, '_blank');
+    btnOrderLinks.disabled = true;
+    try {
+      await sendOrderToDiscord({
+        type: 'energy-links',
+        amount: rawVal,
+        serverName: SERVER_NAME
+      });
+      alert('Pedido enviado correctamente por Discord.');
+    } catch (error) {
+      alert('No se pudo enviar el pedido. Inténtalo de nuevo.');
+      console.error(error);
+    } finally {
+      btnOrderLinks.disabled = false;
+    }
   });
 }
 
@@ -665,25 +679,30 @@ function renderCart() {
   sendCartBtn.disabled = false;
 }
 
-function sendCartWhatsApp() {
+async function sendCartToDiscord() {
   if (deviantsCart.length === 0) return;
 
-  const totalItems = deviantsCart.reduce((sum, item) => sum + item.quantity, 0);
-  const total = deviantsCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const sendCartBtn = document.getElementById('btnSendCart');
+  if (sendCartBtn) sendCartBtn.disabled = true;
 
-  const cartLines = deviantsCart.map(item =>
-    `▪ ${item.quantity}x ${item.name} (${item.category}) — ${formatUSD(item.price * item.quantity)}`
-  );
-
-  const message =
-    `¡Hola ${VENDOR_NAME}! Quiero realizar el siguiente pedido de Deviants en el servidor *${SERVER_NAME}*:\n\n` +
-    `${cartLines.join('\n')}\n\n` +
-    `📦 Total de Deviants: ${totalItems}\n` +
-    `💰 Monto Total: *${formatUSD(total)}*\n\n` +
-    `¿Los tienes listos para transferir in-game?`;
-
-  const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.open(waUrl, '_blank');
+  try {
+    await sendOrderToDiscord({
+      type: 'deviants',
+      serverName: SERVER_NAME,
+      products: deviantsCart.map(item => ({
+        name: item.name,
+        category: item.category,
+        price: item.price,
+        quantity: item.quantity
+      }))
+    });
+    alert('Pedido enviado correctamente por Discord.');
+  } catch (error) {
+    alert('No se pudo enviar el pedido. Inténtalo de nuevo.');
+    console.error(error);
+  } finally {
+    if (sendCartBtn) sendCartBtn.disabled = false;
+  }
 }
 
 // =====================================================
@@ -875,7 +894,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const sendCartBtn = document.getElementById('btnSendCart');
   if (sendCartBtn) {
-    sendCartBtn.addEventListener('click', sendCartWhatsApp);
+    sendCartBtn.addEventListener('click', sendCartToDiscord);
   }
 
   const clearCartBtn = document.getElementById('btnClearCart');

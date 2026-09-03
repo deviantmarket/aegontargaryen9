@@ -381,7 +381,7 @@ img, video {
   font-size: 0.88rem;
 }
 
-.btn-whatsapp-large {
+.btn-order-links {
   width: 100%;
   padding: 1.05rem 1.5rem;
   background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
@@ -399,7 +399,7 @@ img, video {
   transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
 }
 
-.btn-whatsapp-large:hover {
+.btn-order-links:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 40px rgba(37, 211, 102, 0.5);
   filter: brightness(1.06);
@@ -1103,7 +1103,7 @@ footer {
   margin-bottom: 1.8rem;
 }
 
-.btn-whatsapp-footer {
+.btn-support-footer {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -1118,7 +1118,7 @@ footer {
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
-.btn-whatsapp-footer:hover {
+.btn-support-footer:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 40px rgba(37, 211, 102, 0.5);
 }
