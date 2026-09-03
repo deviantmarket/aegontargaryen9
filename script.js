@@ -1,10 +1,11 @@
 // =====================================================
 // CONFIGURACIÓN DE LA TIENDA
 // =====================================================
+const PHONE_NUMBER = "18494268576";
 const SERVER_NAME = "Dream Y0002 NA";
+const VENDOR_NAME = "AegonTargaryen9";
 const PRICE_PER_1M_LINKS = 1.00;
 const STORAGE_KEY = "oh_market_cart_v1";
-const ORDER_ENDPOINT = "/.netlify/functions/discord-orders";
 
 // =====================================================
 // CATÁLOGO COMPLETO DE DEVIANTS
@@ -15,7 +16,7 @@ const DEVIANTS_DATA = [
     id: "medusa-polar",
     name: "Medusa Polar",
     category: "Starfall",
-    price: 25,
+    price: 20,
     img: "Medusa Polar.jpeg",
     desc: "Deviant Starfall exclusivo de alto rendimiento.",
     highlight: "Top Starfall"
@@ -24,7 +25,7 @@ const DEVIANTS_DATA = [
     id: "vudu",
     name: "Vudú",
     category: "Starfall",
-    price: 25,
+    price: 20,
     img: "Vudú.jpeg",
     desc: "Deviant Starfall versátil para combate y control.",
     highlight: "Popular"
@@ -33,7 +34,7 @@ const DEVIANTS_DATA = [
     id: "sol",
     name: "Sol",
     category: "Starfall",
-    price: 25,
+    price: 20,
     img: "Sol.jpeg",
     desc: "Deviant Starfall radiante de gran potencia.",
     highlight: "Top Tier"
@@ -42,7 +43,7 @@ const DEVIANTS_DATA = [
     id: "zapamandra",
     name: "Zapamandra",
     category: "Starfall",
-    price: 25,
+    price: 20,
     img: "Zapamandra.jpeg",
     desc: "Deviant Starfall elemental eléctrico letal.",
     highlight: "Nuevo"
@@ -51,7 +52,7 @@ const DEVIANTS_DATA = [
     id: "minicomilon-starfall",
     name: "Minicomilón",
     category: "Starfall",
-    price: 25,
+    price: 20,
     img: "Minicomilón.jpeg",
     desc: "Deviant Starfall de recolección y asistencia.",
     highlight: "Destacado"
@@ -62,7 +63,7 @@ const DEVIANTS_DATA = [
     id: "lobo",
     name: "Lobo",
     category: "Lunar",
-    price: 20,
+    price: 15,
     img: "Lobo.jpeg",
     desc: "Deviant Lunar de agilidad y ataque veloz.",
     highlight: "Top Combate"
@@ -71,7 +72,7 @@ const DEVIANTS_DATA = [
     id: "camara",
     name: "Cámara",
     category: "Lunar",
-    price: 20,
+    price: 15,
     img: "Cámara.jpeg",
     desc: "Deviant Lunar de soporte estratégico y visión.",
     highlight: "Utilidad"
@@ -80,7 +81,7 @@ const DEVIANTS_DATA = [
     id: "pyro-dino",
     name: "Pyro Dino",
     category: "Lunar",
-    price: 20,
+    price: 15,
     img: "Pirodino.jpeg",
     desc: "Deviant Lunar con daño ígneo en área continuo.",
     highlight: "Daño Fuego"
@@ -89,7 +90,7 @@ const DEVIANTS_DATA = [
     id: "hada-nieves",
     name: "Hada de las Nieves",
     category: "Lunar",
-    price: 20,
+    price: 15,
     img: "Hada de las nieves.jpeg",
     desc: "Deviant Lunar con congelación y ralentización táctica.",
     highlight: "Control Frío"
@@ -98,7 +99,7 @@ const DEVIANTS_DATA = [
     id: "zenopurificador",
     name: "Zenopurificador",
     category: "Lunar",
-    price: 20,
+    price: 15,
     img: "Zenopurificador.jpeg",
     desc: "Deviant Lunar de purificación y soporte de territorio.",
     highlight: "Territorio"
@@ -156,7 +157,7 @@ const DEVIANTS_DATA = [
     id: "rebecca-aberrante",
     name: "Rebecca Aberrante",
     category: "Aberrante",
-    price: 20,
+    price: 15,
     img: "Rebecca aberrante.jpeg",
     desc: "Deviant Aberrante de élite con gran sinergia de combate.",
     highlight: "Elite"
@@ -165,7 +166,7 @@ const DEVIANTS_DATA = [
     id: "dr-osito-aberrante",
     name: "Dr. Osito Aberrante",
     category: "Aberrante",
-    price: 20,
+    price: 15,
     img: "Dr Osito Aberrante.jpeg",
     desc: "Deviant Aberrante con soporte de tanque y curación.",
     highlight: "Tanque/Soporte"
@@ -297,6 +298,33 @@ const DEVIANTS_DATA = [
     img: "Cocinosaurio Rex.jpeg",
     desc: "Deviant experto en cocina y buffs gastronómicos.",
     highlight: "Cocina"
+  },
+  {
+    id: "muneco-papel-infrasonico",
+    name: "Muñeco de papel infrasónico",
+    category: "Otros",
+    price: 10,
+    img: "Muñeco de papel infrasónico.jpeg",
+    desc: "Deviant de apoyo con habilidades de resonancia infrasónica.",
+    highlight: "Nuevo"
+  },
+  {
+    id: "conejo",
+    name: "Conejo",
+    category: "Otros",
+    price: 10,
+    img: "Conejo.jpeg",
+    desc: "Deviant ágil de apoyo y utilidad.",
+    highlight: "Nuevo"
+  },
+  {
+    id: "abeja",
+    name: "Abeja",
+    category: "Otros",
+    price: 10,
+    img: "Abeja.jpeg",
+    desc: "Deviant de apoyo con gran movilidad.",
+    highlight: "Nuevo"
   }
 ];
 
@@ -312,6 +340,10 @@ let deviantsCart = [];
 // =====================================================
 function formatUSD(value) {
   return `$${Number(value).toFixed(2)} USD`;
+}
+
+function formatNumber(num) {
+  return Number(num).toLocaleString('es-ES');
 }
 
 // =====================================================
@@ -378,21 +410,10 @@ if (quickBtns.length > 0) {
   });
 }
 
-async function sendOrderToDiscord(order) {
-  const response = await fetch(ORDER_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(order)
-  });
-
-  if (!response.ok) {
-    throw new Error('No se pudo enviar el pedido.');
-  }
-}
-
 if (btnOrderLinks) {
-  btnOrderLinks.addEventListener('click', async () => {
+  btnOrderLinks.addEventListener('click', () => {
     const rawVal = parseFloat(linkAmountInput?.value) || 0;
+    const price = totalPriceEl ? totalPriceEl.textContent : "$0.00 USD";
 
     if (rawVal <= 0) {
       alert("Por favor ingresa una cantidad válida de Energy Links.");
@@ -400,20 +421,12 @@ if (btnOrderLinks) {
       return;
     }
 
-    btnOrderLinks.disabled = true;
-    try {
-      await sendOrderToDiscord({
-        type: 'energy-links',
-        amount: rawVal,
-        serverName: SERVER_NAME
-      });
-      alert('Pedido enviado correctamente por Discord.');
-    } catch (error) {
-      alert('No se pudo enviar el pedido. Inténtalo de nuevo.');
-      console.error(error);
-    } finally {
-      btnOrderLinks.disabled = false;
-    }
+    const formattedAmount = formatNumber(rawVal);
+    const message =
+      `Hola ${VENDOR_NAME}, quiero comprar ${formattedAmount} Energy Links en el servidor ${SERVER_NAME}. Precio estimado: ${price}. ¿Tienes disponibilidad para entrega inmediata?`;
+
+    const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, '_blank');
   });
 }
 
@@ -467,13 +480,15 @@ function renderCatalog() {
     <div class="card" data-id="${deviant.id}" data-category="${deviant.category}">
       <div class="card-tag tag-${deviant.category.toLowerCase()}">${deviant.category}</div>
       <div class="card-img-wrapper">
-        <img 
-          loading="lazy" 
-          class="deviant-img" 
-          src="${deviant.img}" 
-          alt="${deviant.name}" 
-          data-title="${deviant.name}"
-        >
+        ${deviant.img ? `
+          <img 
+            loading="lazy" 
+            class="deviant-img" 
+            src="${deviant.img}" 
+            alt="${deviant.name}" 
+            data-title="${deviant.name}"
+          >
+        ` : ''}
         ${deviant.highlight ? `<span class="card-badge-feat">${deviant.highlight}</span>` : ''}
       </div>
       <h3>${deviant.name}</h3>
@@ -679,30 +694,25 @@ function renderCart() {
   sendCartBtn.disabled = false;
 }
 
-async function sendCartToDiscord() {
+function sendCartWhatsApp() {
   if (deviantsCart.length === 0) return;
 
-  const sendCartBtn = document.getElementById('btnSendCart');
-  if (sendCartBtn) sendCartBtn.disabled = true;
+  const totalItems = deviantsCart.reduce((sum, item) => sum + item.quantity, 0);
+  const total = deviantsCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  try {
-    await sendOrderToDiscord({
-      type: 'deviants',
-      serverName: SERVER_NAME,
-      products: deviantsCart.map(item => ({
-        name: item.name,
-        category: item.category,
-        price: item.price,
-        quantity: item.quantity
-      }))
-    });
-    alert('Pedido enviado correctamente por Discord.');
-  } catch (error) {
-    alert('No se pudo enviar el pedido. Inténtalo de nuevo.');
-    console.error(error);
-  } finally {
-    if (sendCartBtn) sendCartBtn.disabled = false;
-  }
+  const cartLines = deviantsCart.map(item =>
+    `▪ ${item.quantity}x ${item.name} (${item.category}) — ${formatUSD(item.price * item.quantity)}`
+  );
+
+  const message =
+    `¡Hola ${VENDOR_NAME}! Quiero realizar el siguiente pedido de Deviants en el servidor *${SERVER_NAME}*:\n\n` +
+    `${cartLines.join('\n')}\n\n` +
+    `📦 Total de Deviants: ${totalItems}\n` +
+    `💰 Monto Total: *${formatUSD(total)}*\n\n` +
+    `¿Los tienes listos para transferir in-game?`;
+
+  const waUrl = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, '_blank');
 }
 
 // =====================================================
@@ -894,7 +904,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const sendCartBtn = document.getElementById('btnSendCart');
   if (sendCartBtn) {
-    sendCartBtn.addEventListener('click', sendCartToDiscord);
+    sendCartBtn.addEventListener('click', sendCartWhatsApp);
   }
 
   const clearCartBtn = document.getElementById('btnClearCart');
