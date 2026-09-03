@@ -304,7 +304,7 @@ const DEVIANTS_DATA = [
     name: "Muñeco de papel infrasónico",
     category: "Otros",
     price: 10,
-    img: "Muñeco de papel infrasónico.jpeg",
+    img: "Muñeco de papel infrasonico.jpeg",
     desc: "Deviant de apoyo con habilidades de resonancia infrasónica.",
     highlight: "Nuevo"
   },
