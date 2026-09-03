@@ -301,7 +301,7 @@ const DEVIANTS_DATA = [
   },
   {
     id: "muñeco-papel-infrasonico",
-    name: "Muñeco de papel infrasónico",
+    name: "Muñeco de papel infrasonico",
     category: "Otros",
     price: 10,
     img: "Muñeco de papel infrasonico.jpeg",
